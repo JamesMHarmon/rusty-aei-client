@@ -15,7 +15,7 @@ const options = yarg
 	.command('aei')
 	.command('analyze <move_file>')
 	.option('t', { alias: 'token', describe: 'Your token', type: 'string', demandOption: false })
-	.option('u', { alias: 'url', describe: 'Rusty remote endpoint', default: 'ws://localhost:8080', type: 'string', demandOption: false })
+	.option('u', { alias: 'url', describe: 'Rusty remote endpoint', default: 'ws://45.79.196.77:8080', type: 'string', demandOption: false })
 	.demandCommand()
 	.check(({ token }) => {
 		if (!token) {

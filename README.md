@@ -13,7 +13,7 @@ A token is used to authenticate the remote client with the proxy. To get a token
 
 ## Download
 
-To get the latest remote client, download the client from the [releases] section.
+Download the latest client from the [releases] section.
 
 ## Use
 
@@ -40,7 +40,7 @@ rusty-aei-client-linux-0.1.0 analyze ./move_file.txt -t <token>
 
 The rusty client can be used with [Janzert AEI]. This includes `analyze`, `gameroom`, and `roundrobin`.
 
-Just update the corresponding config like so.
+Update the corresponding config like so.
 
 ```yml
 [global]
@@ -80,4 +80,4 @@ The rusty client can be used with [4Steps] to analyze and explore a position. To
 [AEI Protocol]: <https://github.com/Janzert/AEI/blob/master/aei-protocol.txt> "AEI Protocol"
 [4steps]: <https://github.com/TFiFiE/4steps> "4steps"
 [discord]: <https://discord.com/invite/YCH3FSp> "Discord"
-[releases]: </releases/latest> "Release"
+[releases]: <https://github.com/JamesMHarmon/rusty-aei-client/releases/latest> "Release"
