@@ -11,6 +11,10 @@ A token is used to authenticate the remote client with the proxy. To get a token
 > rbt_980ce16fb61247e5b79cb58b5ab22a3c
 ```
 
+## Download
+
+To get the latest remote client, download the client from the [releases] section.
+
 ## Use
 
 Rusty remote client is AEI compatible which means that it can be used with most clients. Here are some examples on how to use rusty with some of those clients.
@@ -53,7 +57,7 @@ cmdline = ./rusty-aei-client-linux-0.1.0 aei -t <token>
 
 ### 4Steps
 
-The rusty client can be used with 4steps to analyze and explore a position. To do this:
+The rusty client can be used with [4Steps] to analyze and explore a position. To do this:
 
 1. **Right click** the board in 4steps and select **Run analysis** from the menu.
 2. Press the **Locate** button and select the rusty client.
@@ -76,3 +80,4 @@ The rusty client can be used with 4steps to analyze and explore a position. To d
 [AEI Protocol]: <https://github.com/Janzert/AEI/blob/master/aei-protocol.txt> "AEI Protocol"
 [4steps]: <https://github.com/TFiFiE/4steps> "4steps"
 [discord]: <https://discord.com/invite/YCH3FSp> "Discord"
+[releases]: </releases/latest> "Release"
