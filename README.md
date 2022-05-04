@@ -24,7 +24,7 @@ Rusty remote client is AEI compatible which means that it can be used with most 
 To use rusty in the command line using the [AEI protocol].
 
 ```shell
-rusty-aei-client-linux-0.1.0 aei -t <token>
+rusty-aei-client-linux-0.1.2 aei -t <token>
 newgame
 go
 makemove Da2 Hb2 Mc2 Dd2 Ee2 Cf2 Cg2 Hh2 Ra1 Rb1 Rc1 Rd1 Re1 Rf1 Rg1 Rh1
@@ -33,7 +33,7 @@ makemove Da2 Hb2 Mc2 Dd2 Ee2 Cf2 Cg2 Hh2 Ra1 Rb1 Rc1 Rd1 Re1 Rf1 Rg1 Rh1
 To analyze a move_file.txt
 
 ```shell
-rusty-aei-client-linux-0.1.0 analyze ./move_file.txt -t <token>
+rusty-aei-client-linux-0.1.2 analyze ./move_file.txt -t <token>
 ```
 
 ### Janzert AEI
@@ -52,7 +52,7 @@ log_level = DEBUG
 
 [bot_rusty]
 communication_method = stdio
-cmdline = ./rusty-aei-client-linux-0.1.0 aei -t <token>
+cmdline = ./rusty-aei-client-linux-0.1.2 aei -t <token>
 ```
 
 ### 4Steps

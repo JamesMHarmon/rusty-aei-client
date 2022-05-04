@@ -109,8 +109,10 @@ ws.on('close', () => {
 
 function analyze() {
 	(async () => {
-		const moveFile = await fs.readFile(move_file);
-		const moves = (moveFile + '').split(/(?:^|\s+)\d+[wbgs]\s+/).map((m) => m.trim()).filter((m) => m);
+		const moveFile = (await fs.readFile(move_file)) + '';
+		const moveFileWithoutPass = moveFile.replace('2w pass', '');
+		const silverToMove = moveFileWithoutPass.length !== moveFile.length;
+		const moves = moveFileWithoutPass.split(/(?:^|\s+)\d+[wbgs]\s+/).map((m) => m.trim()).filter((m) => m);
 
 		ws.send('newgame');
 
@@ -118,7 +120,7 @@ function analyze() {
 
 		const [firstMove, secondMove, ...restMoves] = moves;
 
-		const setupCommands = getSetupCommands(firstMove, secondMove);
+		const setupCommands = getSetupCommands(firstMove, secondMove, silverToMove);
 
 		for (const command of setupCommands) {
 			ws.send(command);
@@ -154,33 +156,26 @@ function onAnalyzeData(data) {
 	}
 }
 
-function getSetupCommands(firstMove, secondMove) {
+function getSetupCommands(firstMove, secondMove, silverToMove) {
 	let moves = (' ' + firstMove + ' ' + secondMove).match(/\s+\w\w\d/g);
+	const pieceToMove = silverToMove ? 's' : 'g';
 
-	// If it is the first move for gold or the first move for silver.
-	if (moves.length === 32) {
-		const positions = Array(64).fill(' ');
+	const positions = Array(64).fill(' ');
 
-		for (const move of moves) {
-			const [piece, col, row] = move.trim();
-			const colIdx = col.charCodeAt(0) - 97;
-			const rowIdx = Number.parseInt(row) - 1;
-			const posIdx = (7 - rowIdx) * 8 + colIdx;
+	for (const move of moves) {
+		const [piece, col, row] = move.trim();
+		const colIdx = col.charCodeAt(0) - 97;
+		const rowIdx = Number.parseInt(row) - 1;
+		const posIdx = (7 - rowIdx) * 8 + colIdx;
 
-			positions[posIdx] = piece;
-		}
-
-		const command = `setposition g [${positions.join('')}]`;
-
-		console.log('log Debug:', command);
-
-		return [command];
+		positions[posIdx] = piece;
 	}
 
-	return [
-		`makemove ${firstMove}`,
-		`makemove ${secondMove}`
-	];
+	const command = `setposition ${pieceToMove} [${positions.join('')}]`;
+
+	console.log('log Debug:', command);
+
+	return [command];
 }
 
 

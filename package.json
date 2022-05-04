@@ -1,6 +1,6 @@
 {
   "name": "rusty-aei-client",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A client that allows for remote usage of the rusty arimaa bot through the aei interface.",
   "main": "index.js",
   "scripts": {
