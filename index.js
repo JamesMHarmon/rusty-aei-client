@@ -2,6 +2,7 @@ const yarg = require('yargs');
 const readline = require('readline');
 const WebSocket = require('ws');
 const fs = require('fs/promises');
+const { version } = require('./package.json');
 
 const MAX_VISITS = 5000000;
 
@@ -9,15 +10,27 @@ let isAnalyzeMode = false;
 let isAnalyzeComplete = false;
 
 /* eslint-disable indent */
-const options = yarg
+const { _: args, move_file, url, token } = yarg
 	.usage('Usage: -t <token>')
-	// .command('aei')
+	.version(version)
 	.command('aei')
 	.command('analyze <move_file>')
 	.option('t', { alias: 'token', describe: 'Your token', type: 'string', demandOption: false })
 	.option('u', { alias: 'url', describe: 'Rusty remote endpoint', default: 'ws://45.79.196.77:8080', type: 'string', demandOption: false })
-	.demandCommand()
-	.check(({ token }) => {
+	.demandCommand(1, 1, 'Specify either the "aei" or "analyze".', 'Only one command can be specified')
+	.check(({ _, token, move_file }) => {
+		const command = (_[0] || '').toLowerCase();
+
+		const commandSpecified = ['aei', 'analyze'].find((c) => c === command);
+
+		if (!commandSpecified) {
+			throw new Error('The command "aei" or "analyze" must be specified.');
+		}
+
+		if (commandSpecified === 'analyze' && !move_file) {
+			throw new Error('A <move_file> must be specified.');
+		}
+
 		if (!token) {
 			throw new Error('A token must be supplied with the -t flag');
 		}
@@ -31,7 +44,7 @@ const options = yarg
 	.argv;
 /* eslint-enable indent */
 
-isAnalyzeMode = options._[0] === 'analyze';
+isAnalyzeMode = args[0] === 'analyze';
 const excludes = /^log Debug: search visits|^info time|^info root_score|^info root_transpositionid|^info transpositionid/;
 
 const rl = readline.createInterface({
@@ -39,7 +52,7 @@ const rl = readline.createInterface({
 	output: process.stdout
 });
 
-const ws = new WebSocket(options.url);
+const ws = new WebSocket(url);
 
 let bufferedInput = [];
 rl.on('line', (input) => {
@@ -56,7 +69,8 @@ rl.on('line', (input) => {
 ws.on('open', function open() {
 	console.log('log Debug: Connection Opened');
 	ws.send(JSON.stringify({
-		token: options.token
+		token,
+		version
 	}));
 
 	ws.isAlive = true;
@@ -95,8 +109,8 @@ ws.on('close', () => {
 
 function analyze() {
 	(async () => {
-		const moveFile = await fs.readFile(options.move_file);
-		const moves = (moveFile + '').split(/(?:1[wg])|(?:\s\d+[wbgs]\s)/).map((m) => m.trim()).filter((m) => m);
+		const moveFile = await fs.readFile(move_file);
+		const moves = (moveFile + '').split(/(?:^|\s+)\d+[wbgs]\s+/).map((m) => m.trim()).filter((m) => m);
 
 		ws.send('newgame');
 
