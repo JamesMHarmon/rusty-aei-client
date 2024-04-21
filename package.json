@@ -1,13 +1,13 @@
 {
-  "name": "rusty-aei-client",
+  "name": "ugi-client",
   "version": "0.1.2",
-  "description": "A client that allows for remote usage of the rusty arimaa bot through the aei interface.",
+  "description": "A client that allows for remote usage of the a ugi bot through the ugi interface.",
   "main": "index.js",
   "scripts": {
     "build": "npm-run-all build-*",
-    "build-linux": "cross-var pkg -o ./dist/rusty-aei-client-linux-$npm_package_version -t node16-linux-x64 ./index.js",
-    "build-macos": "cross-var pkg -o ./dist/rusty-aei-client-macos-$npm_package_version -t node16-macos-x64 ./index.js",
-    "build-win": "cross-var pkg -o ./dist/rusty-aei-client-win-$npm_package_version -t node16-win-x64 ./index.js",
+    "build-linux": "cross-var pkg -o ./dist/ugi-client-linux-$npm_package_version -t node16-linux-x64 ./index.js",
+    "build-macos": "cross-var pkg -o ./dist/ugi-client-macos-$npm_package_version -t node16-macos-x64 ./index.js",
+    "build-win": "cross-var pkg -o ./dist/ugi-client-win-$npm_package_version -t node16-win-x64 ./index.js",
     "dev": "node ./index.js",
     "lint": "eslint ."
   },
