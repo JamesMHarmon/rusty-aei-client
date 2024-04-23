@@ -1,6 +1,6 @@
 {
   "name": "ugi-client",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A client that allows for remote usage of the a ugi bot through the ugi interface.",
   "main": "index.js",
   "scripts": {

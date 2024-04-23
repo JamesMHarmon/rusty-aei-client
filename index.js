@@ -23,7 +23,7 @@ const { _: args, url, token } = yarg
 	.argv;
 /* eslint-enable indent */
 
-const excludes = /^log Debug: search visits|^info time|^info root_score|^info root_transpositionid|^info transpositionid/;
+const excludes = /^log Debug: search visits|^info time|^info root_score|^info root_transpositionid|^info transpositionid|^pong/;
 
 const rl = readline.createInterface({
 	input: process.stdin,
@@ -33,6 +33,7 @@ const rl = readline.createInterface({
 const ws = new WebSocket(url);
 
 let bufferedInput = [];
+let interval;
 rl.on('line', (input) => {
 	input = input.trim();
 	if (input) {
@@ -56,6 +57,8 @@ ws.on('open', function open() {
 	bufferedInput.forEach((input) => ws.send(input));
 
 	bufferedInput.length = 0;
+
+	interval = setInterval(() => ws.send('ping'), 60 * 1000);
 });
 
 ws.on('message', function message(data) {
@@ -74,4 +77,5 @@ ws.on('close', () => {
 	ws.isAlive = false;
 	console.log('log Debug: Connection Closed');
 	rl.close();
+	clearInterval(interval);
 });
